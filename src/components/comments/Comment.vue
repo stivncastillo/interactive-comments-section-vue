@@ -7,26 +7,48 @@ import CommentCounter from "./CommentCounter.vue";
 import Badge from "../Badge.vue";
 import type { PropType } from "vue";
 import type { Comment as CommentType } from "../../types";
+import { mapActions, mapState } from "vuex";
 </script>
 
 <template>
   <li class="comment">
     <div class="card">
-      <CommentCounter />
+      <CommentCounter
+        :number="comment?.score"
+        @on-increase="increase(comment?.id ?? 0)"
+        @on-decrease="decrease(comment?.id ?? 0)"
+      />
 
       <div class="comment-content">
         <div class="comment-header">
           <Avatar size="sm" :image="`images/avatars/${imageName}`" />
 
-          <h2 class="h5">{{ comment?.user.username }} <Badge>you</Badge></h2>
-          <span class="text-sm text-muted">1 month ago</span>
+          <h2 class="h5">
+            {{ comment?.user.username }}
+            <Badge v-if="currentUser.username === comment?.user.username"
+              >you</Badge
+            >
+          </h2>
+          <span class="text-sm text-muted">{{ comment?.createdAt }}</span>
 
           <div class="comment-actions">
-            <ButtonIcon color="danger">
+            <ButtonIcon
+              color="danger"
+              v-if="currentUser.username === comment?.user.username"
+            >
               <template #icon><IconDelete /></template>Delete</ButtonIcon
             >
-            <ButtonIcon color="primary">
+            <ButtonIcon
+              color="primary"
+              v-if="currentUser.username !== comment?.user.username"
+            >
               <template #icon><IconReply /></template>Reply</ButtonIcon
+            >
+            <ButtonIcon
+              color="primary"
+              v-if="currentUser.username === comment?.user.username"
+            >
+              <template #icon><IconReply /></template>Edit</ButtonIcon
             >
           </div>
         </div>
@@ -50,10 +72,16 @@ export default {
       const image = this.comment?.user.image.png;
       return image?.substring(image?.lastIndexOf("/") + 1) ?? "";
     },
+    ...mapState("authModule", ["currentUser"]),
   },
-  mounted() {
-    console.log(this.$props.comment);
+  methods: {
+    ...mapActions("commentsModule", ["increaseScore", "decreaseScore"]),
+    increase(id: number) {
+      this.increaseScore(id);
+    },
+    decrease(id: number) {
+      this.decreaseScore(id);
+    },
   },
-  // computed: {},
 };
 </script>

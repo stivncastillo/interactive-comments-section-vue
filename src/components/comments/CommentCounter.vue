@@ -1,10 +1,26 @@
 <template>
   <div class="counter">
-    <button class="counter-action">+</button>
-    <span>12</span>
-    <button class="counter-action">-</button>
+    <button class="counter-action" @click="increase">+</button>
+    <span>{{ number }}</span>
+    <button class="counter-action" @click="decrease">-</button>
   </div>
 </template>
+
+<script lang="ts">
+export default {
+  props: {
+    number: Number,
+  },
+  methods: {
+    increase() {
+      this.$emit("onIncrease");
+    },
+    decrease() {
+      this.$emit("onDecrease");
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .counter {
