@@ -9,7 +9,6 @@ import "./assets/scss/main.scss";
 
 const store = createStore<State>({
   modules: {
-    // @ts-ignore
     commentsModule,
     authModule,
   },

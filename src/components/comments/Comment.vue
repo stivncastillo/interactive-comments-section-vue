@@ -3,6 +3,7 @@ import Avatar from "../Avatar.vue";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
 import IconDelete from "../icons/IconDelete.vue";
 import IconReply from "../icons/IconReply.vue";
+import IconEdit from "../icons/IconEdit.vue";
 import CommentCounter from "./CommentCounter.vue";
 import Badge from "../Badge.vue";
 import type { PropType } from "vue";
@@ -48,7 +49,7 @@ import { mapActions, mapState } from "vuex";
               color="primary"
               v-if="currentUser.username === comment?.user.username"
             >
-              <template #icon><IconReply /></template>Edit</ButtonIcon
+              <template #icon><IconEdit /></template>Edit</ButtonIcon
             >
           </div>
         </div>

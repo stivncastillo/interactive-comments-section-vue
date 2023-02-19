@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import Avatar from "../Avatar.vue";
 import ButtonIcon from "../buttons/ButtonIcon.vue";
+import { mapState } from "vuex";
 </script>
 
 <template>
   <div class="new-comment card">
     <div class="avatar-container">
-      <Avatar size="md" />
+      <Avatar size="md" :image="`images/avatars/${imageName}`" />
     </div>
 
     <div class="comment-form">
@@ -16,6 +17,18 @@ import ButtonIcon from "../buttons/ButtonIcon.vue";
     </div>
   </div>
 </template>
+
+<script lang="ts">
+export default {
+  computed: {
+    imageName() {
+      const image = this.currentUser.image.png;
+      return image?.substring(image?.lastIndexOf("/") + 1) ?? "";
+    },
+    ...mapState("authModule", ["currentUser"]),
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 .new-comment {

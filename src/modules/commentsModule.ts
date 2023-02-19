@@ -24,11 +24,17 @@ export const commentsModule = {
   actions: {
     // @ts-ignore
     increaseScore(context, id) {
-      context.commit("increaseScore", { id });
+      if (!context.rootGetters["authModule/isCommentSocred"](id)) {
+        context.commit("increaseScore", { id });
+        context.dispatch("authModule/scoreComment", id, { root: true });
+      }
     },
     // @ts-ignore
     decreaseScore(context, id) {
-      context.commit("decreaseScore", { id });
+      if (context.rootGetters["authModule/isCommentSocred"](id)) {
+        context.commit("decreaseScore", { id });
+        context.dispatch("authModule/removeScoreComment", id, { root: true });
+      }
     },
   },
 };

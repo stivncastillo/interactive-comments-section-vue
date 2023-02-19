@@ -1,4 +1,3 @@
-import { authModule } from "./modules/authModule";
 export interface Comment {
   id: number;
   content: string;
@@ -24,6 +23,7 @@ export interface CommentsState {
 }
 export interface AuthState {
   currentUser: User;
+  commentsScored: number[];
 }
 export interface State {
   commentsModule: CommentsState;
