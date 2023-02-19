@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import IconReply from "./components/icons/IconReply.vue";
-import IconDelete from "./components/icons/IconDelete.vue";
-import ButtonIcon from "./components/buttons/ButtonIcon.vue";
+import Comment from "./components/comments/Comment.vue";
+import CommentForm from "./components/comments/CommentForm.vue";
 </script>
 
 <template>
@@ -9,205 +8,109 @@ import ButtonIcon from "./components/buttons/ButtonIcon.vue";
     <!-- Comments -->
     <section class="comments-container">
       <ul class="comments">
-        <li class="comment">
-          <div class="card">
-            <div class="counter">
-              <button class="counter-action">+</button>
-              <span>12</span>
-              <button class="counter-action">-</button>
-            </div>
-
-            <div class="comment-content">
-              <div class="comment-header">
-                <div class="comment-header-thumbnail">
-                  <img
-                    src="./assets/images/avatars/image-amyrobson.png"
-                    alt="Profile"
-                  />
-                </div>
-
-                <h2 class="h5">
-                  Name of user <span class="badge badge-primary">you</span>
-                </h2>
-                <span class="text-sm text-muted">1 month ago</span>
-
-                <div class="comment-actions">
-                  <ButtonIcon color="danger">
-                    <template #icon><IconDelete /></template>Delete</ButtonIcon
-                  >
-                  <ButtonIcon color="primary">
-                    <template #icon><IconReply /></template>Reply</ButtonIcon
-                  >
-                </div>
-              </div>
-
-              <p class="comment-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia aperiam vitae, cupiditate vero quae repellendus.
-                Consequatur itaque culpa quae? Minima id laboriosam sunt,
-                tempore distinctio laborum magni! Quaerat, recusandae earum.
-              </p>
-            </div>
-          </div>
-
-          <ul class="replies">
-            <li class="comment">
-              <div class="card">
-                <div class="counter">
-                  <button class="counter-action">+</button>
-                  <span>12</span>
-                  <button class="counter-action">-</button>
-                </div>
-
-                <div class="comment-content">
-                  <div class="comment-header">
-                    <div class="comment-header-thumbnail">
-                      <img
-                        src="./assets/images/avatars/image-amyrobson.png"
-                        alt="Profile"
-                      />
-                    </div>
-
-                    <h2 class="h5">Name of user</h2>
-                    <span class="text-sm text-muted">1 month ago</span>
-
-                    <div class="comment-actions">
-                      <ButtonIcon color="danger">
-                        <template #icon><IconDelete /></template
-                        >Delete</ButtonIcon
-                      >
-                      <ButtonIcon color="primary">
-                        <template #icon><IconReply /></template
-                        >Reply</ButtonIcon
-                      >
-                    </div>
-                  </div>
-
-                  <p class="comment-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Mollitia aperiam vitae, cupiditate vero quae repellendus.
-                    Consequatur itaque culpa quae? Minima id laboriosam sunt,
-                    tempore distinctio laborum magni! Quaerat, recusandae earum.
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="comment">
-              <div class="card">
-                <div class="counter">
-                  <button class="counter-action">+</button>
-                  <span>12</span>
-                  <button class="counter-action">-</button>
-                </div>
-
-                <div class="comment-content">
-                  <div class="comment-header">
-                    <div class="comment-header-thumbnail">
-                      <img
-                        src="./assets/images/avatars/image-amyrobson.png"
-                        alt="Profile"
-                      />
-                    </div>
-
-                    <h2 class="h5">Name of user</h2>
-                    <span class="text-sm text-muted">1 month ago</span>
-
-                    <div class="comment-actions">
-                      <ButtonIcon color="danger">
-                        <template #icon><IconDelete /></template
-                        >Delete</ButtonIcon
-                      >
-                      <ButtonIcon color="primary">
-                        <template #icon><IconReply /></template
-                        >Reply</ButtonIcon
-                      >
-                    </div>
-                  </div>
-
-                  <p class="comment-text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Mollitia aperiam vitae, cupiditate vero quae repellendus.
-                    Consequatur itaque culpa quae? Minima id laboriosam sunt,
-                    tempore distinctio laborum magni! Quaerat, recusandae earum.
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="comment">
-              <div class="new-comment card">
-                <div class="avatar">
-                  <img
-                    src="./assets/images/avatars/image-amyrobson.png"
-                    alt="Avatar"
-                  />
-                </div>
-
-                <div class="comment-form">
-                  <textarea name="comment" id="comment" rows="3"></textarea>
-
-                  <ButtonIcon color="primary" fill size="lg">SEND</ButtonIcon>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-
-        <li class="comment">
-          <div class="card">
-            <div class="counter">
-              <button class="counter-action">+</button>
-              <span>12</span>
-              <button class="counter-action">-</button>
-            </div>
-
-            <div class="comment-content">
-              <div class="comment-header">
-                <div class="comment-header-thumbnail">
-                  <img
-                    src="./assets/images/avatars/image-amyrobson.png"
-                    alt="Profile"
-                  />
-                </div>
-
-                <h2 class="h5">Name of user</h2>
-                <span class="text-sm text-muted">1 month ago</span>
-
-                <div class="comment-actions">
-                  <ButtonIcon color="danger">
-                    <template #icon><IconDelete /></template>Delete</ButtonIcon
-                  >
-                  <ButtonIcon color="primary">
-                    <template #icon><IconReply /></template>Reply</ButtonIcon
-                  >
-                </div>
-              </div>
-
-              <p class="comment-text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia aperiam vitae, cupiditate vero quae repellendus.
-                Consequatur itaque culpa quae? Minima id laboriosam sunt,
-                tempore distinctio laborum magni! Quaerat, recusandae earum.
-              </p>
-            </div>
-          </div>
-        </li>
+        <Comment
+          v-for="comment in result.comments"
+          :comment="comment"
+          v-bind:key="comment.id"
+        >
+          <template #replies>
+            <ul class="replies">
+              <Comment
+                v-for="replies in comment.replies"
+                :comment="replies"
+                v-bind:key="replies.id"
+              />
+            </ul>
+          </template>
+        </Comment>
       </ul>
     </section>
 
     <section class="new-comment-form">
-      <div class="new-comment card">
-        <div class="avatar">
-          <img src="./assets/images/avatars/image-amyrobson.png" alt="Avatar" />
-        </div>
-
-        <div class="comment-form">
-          <textarea name="comment" id="comment" rows="3"></textarea>
-
-          <ButtonIcon color="primary" fill size="lg">SEND</ButtonIcon>
-        </div>
-      </div>
+      <CommentForm />
     </section>
   </main>
 </template>
+
+<script lang="ts">
+export default {
+  data() {
+    return {
+      result: {
+        currentUser: {
+          image: {
+            png: "./images/avatars/image-juliusomo.png",
+            webp: "./images/avatars/image-juliusomo.webp",
+          },
+          username: "juliusomo",
+        },
+        comments: [
+          {
+            id: 1,
+            content:
+              "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
+            createdAt: "1 month ago",
+            score: 12,
+            user: {
+              image: {
+                png: "./images/avatars/image-amyrobson.png",
+                webp: "./images/avatars/image-amyrobson.webp",
+              },
+              username: "amyrobson",
+            },
+            replies: [],
+          },
+          {
+            id: 2,
+            content:
+              "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
+            createdAt: "2 weeks ago",
+            score: 5,
+            user: {
+              image: {
+                png: "./images/avatars/image-maxblagun.png",
+                webp: "./images/avatars/image-maxblagun.webp",
+              },
+              username: "maxblagun",
+            },
+            replies: [
+              {
+                id: 3,
+                content:
+                  "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
+                createdAt: "1 week ago",
+                score: 4,
+                replyingTo: "maxblagun",
+                user: {
+                  image: {
+                    png: "./images/avatars/image-ramsesmiron.png",
+                    webp: "./images/avatars/image-ramsesmiron.webp",
+                  },
+                  username: "ramsesmiron",
+                },
+              },
+              {
+                id: 4,
+                content:
+                  "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
+                createdAt: "2 days ago",
+                score: 2,
+                replyingTo: "ramsesmiron",
+                user: {
+                  image: {
+                    png: "./images/avatars/image-juliusomo.png",
+                    webp: "./images/avatars/image-juliusomo.webp",
+                  },
+                  username: "juliusomo",
+                },
+              },
+            ],
+          },
+        ],
+      },
+    };
+  },
+};
+</script>
 
 <style scoped></style>
