@@ -11,7 +11,8 @@ const slots = useSlots();
       secondary: isSecondary,
       danger: isDanger,
       [sizeClass]: size,
-      fill: fill,
+      fill,
+      block: block,
     }"
   >
     <i v-if="slots.icon">
@@ -29,6 +30,7 @@ export default {
     color: { type: String, default: "primary" },
     fill: { type: Boolean, default: false },
     size: { type: String, default: "md" },
+    block: Boolean,
   },
   computed: {
     isPrimary() {

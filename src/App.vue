@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import Comment from "./components/comments/Comment.vue";
 import CommentForm from "./components/comments/CommentForm.vue";
+import DeleteModal from "./components/Modal/DeleteModal.vue";
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import CommentForm from "./components/comments/CommentForm.vue";
           v-for="comment in comments"
           :comment="comment"
           v-bind:key="comment.id"
+          @onDelete="onDelete"
         >
           <template #replies>
             <ul class="replies">
@@ -20,6 +22,7 @@ import CommentForm from "./components/comments/CommentForm.vue";
                 v-for="replies in comment.replies"
                 :comment="replies"
                 v-bind:key="replies.id"
+                @onDelete="onDelete"
               />
             </ul>
           </template>
@@ -30,6 +33,12 @@ import CommentForm from "./components/comments/CommentForm.vue";
     <section class="new-comment-form">
       <CommentForm />
     </section>
+
+    <DeleteModal
+      :show="showModal"
+      @on-cancel="onCancelDelete"
+      @on-delete="handleShowDeleteModal"
+    />
   </main>
 </template>
 
@@ -37,6 +46,29 @@ import CommentForm from "./components/comments/CommentForm.vue";
 export default {
   computed: {
     ...mapState("commentsModule", ["comments"]),
+  },
+  components: { DeleteModal },
+  data() {
+    return {
+      showModal: false,
+      commentIdToDelete: 0,
+    };
+  },
+  methods: {
+    ...mapActions("commentsModule", ["deleteCommentById"]),
+    onCancelDelete() {
+      this.showModal = false;
+      this.commentIdToDelete = 0;
+    },
+    handleShowDeleteModal() {
+      this.deleteCommentById(this.commentIdToDelete);
+      this.showModal = false;
+      this.commentIdToDelete = 0;
+    },
+    onDelete(id: number) {
+      this.showModal = true;
+      this.commentIdToDelete = id;
+    },
   },
 };
 </script>

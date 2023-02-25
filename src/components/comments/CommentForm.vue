@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Avatar from "../Avatar.vue";
-import ButtonIcon from "../buttons/ButtonIcon.vue";
+import ButtonIcon from "../buttons/Button.vue";
 import { mapState } from "vuex";
 </script>
 

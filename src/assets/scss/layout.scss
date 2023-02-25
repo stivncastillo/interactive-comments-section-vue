@@ -17,47 +17,6 @@
   flex-direction: column;
 }
 
-.comment {
-  display: flex;
-  flex-direction: column;
-
-  &-content {
-    display: flex;
-    flex-direction: column;
-    margin-left: 16px;
-  }
-
-  &-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1rem;
-
-    & > * {
-      margin-right: 8px;
-    }
-  }
-
-  &-actions {
-    display: flex;
-    flex-direction: row;
-    margin-left: auto;
-    margin-right: 0px;
-  }
-
-  &-text {
-
-  color: var(--c-grayish-blue);
-}
-
-  .card {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-  }
-}
-
 .replies {
   margin-left: 28px;
 

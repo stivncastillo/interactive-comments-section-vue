@@ -1,6 +1,6 @@
-import type { CommentsState } from "./../types.d";
+import type { CommentsState, Comment } from "./../types.d";
 import data from "../data/data.json";
-import { findObjectById } from "@/helpers/commentsHelpers";
+import { findObjectById, deleteComment } from "@/helpers/commentsHelpers";
 
 export const commentsModule = {
   namespaced: true,
@@ -20,6 +20,9 @@ export const commentsModule = {
         commentObj.score -= 1;
       }
     },
+    deleteCommentById(state: CommentsState, { id }: { id: number }) {
+      deleteComment(state.comments, id);
+    },
   },
   actions: {
     // @ts-ignore
@@ -35,6 +38,10 @@ export const commentsModule = {
         context.commit("decreaseScore", { id });
         context.dispatch("authModule/removeScoreComment", id, { root: true });
       }
+    },
+    // @ts-ignore
+    deleteCommentById(context, id) {
+      context.commit("deleteCommentById", { id });
     },
   },
 };
