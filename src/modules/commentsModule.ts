@@ -1,6 +1,11 @@
-import type { CommentsState, Comment } from "./../types.d";
+import type { CommentsState } from "./../types.d";
 import data from "../data/data.json";
-import { findObjectById, deleteComment } from "@/helpers/commentsHelpers";
+import {
+  findObjectById,
+  deleteComment,
+  addComment,
+  NEW_COMMENT,
+} from "@/helpers/commentsHelpers";
 
 export const commentsModule = {
   namespaced: true,
@@ -23,6 +28,17 @@ export const commentsModule = {
     deleteCommentById(state: CommentsState, { id }: { id: number }) {
       deleteComment(state.comments, id);
     },
+    addReplyCommentForm(state: CommentsState, { id }: { id: number }) {
+      state.comments = addComment(state.comments, id, NEW_COMMENT);
+    },
+    addComment(
+      state: CommentsState,
+      { comment, commentId }: { comment: Comment; commentId: number }
+    ) {
+      if (!commentId) {
+        state.comments.push({ id: new Date().getTime(), ...comment });
+      }
+    },
   },
   actions: {
     // @ts-ignore
@@ -42,6 +58,14 @@ export const commentsModule = {
     // @ts-ignore
     deleteCommentById(context, id) {
       context.commit("deleteCommentById", { id });
+    },
+    // @ts-ignore
+    addComment(context, comment) {
+      context.commit("addComment", { comment });
+    },
+    // @ts-ignore
+    addReplyCommentForm(context, id) {
+      context.commit("addReplyCommentForm", { id });
     },
   },
 };

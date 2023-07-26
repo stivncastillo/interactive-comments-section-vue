@@ -3,6 +3,7 @@ import { mapActions, mapState } from "vuex";
 import Comment from "./components/comments/Comment.vue";
 import CommentForm from "./components/comments/CommentForm.vue";
 import DeleteModal from "./components/Modal/DeleteModal.vue";
+import type { Comment as CommentType } from "./types";
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import DeleteModal from "./components/Modal/DeleteModal.vue";
           :comment="comment"
           v-bind:key="comment.id"
           @onDelete="onDelete"
+          @onReply="handleReplyCommentForm"
         >
           <template #replies>
             <ul class="replies">
@@ -23,6 +25,7 @@ import DeleteModal from "./components/Modal/DeleteModal.vue";
                 :comment="replies"
                 v-bind:key="replies.id"
                 @onDelete="onDelete"
+                @onReply="handleReplyCommentForm"
               />
             </ul>
           </template>
@@ -31,7 +34,7 @@ import DeleteModal from "./components/Modal/DeleteModal.vue";
     </section>
 
     <section class="new-comment-form">
-      <CommentForm />
+      <CommentForm :current-user="currentUser" @on-save="onAddComment" />
     </section>
 
     <DeleteModal
@@ -46,6 +49,7 @@ import DeleteModal from "./components/Modal/DeleteModal.vue";
 export default {
   computed: {
     ...mapState("commentsModule", ["comments"]),
+    ...mapState("authModule", ["currentUser"]),
   },
   components: { DeleteModal },
   data() {
@@ -55,7 +59,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions("commentsModule", ["deleteCommentById"]),
+    ...mapActions("commentsModule", [
+      "deleteCommentById",
+      "addComment",
+      "addReplyCommentForm",
+    ]),
     onCancelDelete() {
       this.showModal = false;
       this.commentIdToDelete = 0;
@@ -68,6 +76,12 @@ export default {
     onDelete(id: number) {
       this.showModal = true;
       this.commentIdToDelete = id;
+    },
+    handleReplyCommentForm(id: number) {
+      this.addReplyCommentForm(id);
+    },
+    onAddComment(comment: CommentType) {
+      this.addComment(comment);
     },
   },
 };

@@ -9,62 +9,69 @@ import Badge from "../Badge.vue";
 import type { PropType } from "vue";
 import type { Comment as CommentType } from "../../types";
 import { mapActions, mapState } from "vuex";
+import CommentForm from "./CommentForm.vue";
 </script>
 
 <template>
-  <Transition name="comment">
-    <li class="comment">
-      <div class="card">
-        <CommentCounter
-          :number="comment?.score"
-          @on-increase="increase(comment?.id ?? 0)"
-          @on-decrease="decrease(comment?.id ?? 0)"
-        />
+  <li class="comment">
+    <div class="card" v-if="comment?.id !== 0">
+      <CommentCounter
+        :number="comment?.score"
+        @on-increase="increase((comment?.id as number) ?? 0)"
+        @on-decrease="decrease((comment?.id as number) ?? 0)"
+      />
 
-        <div class="comment-content">
-          <div class="comment-header">
-            <Avatar size="sm" :image="`images/avatars/${imageName}`" />
+      <div class="comment-content">
+        <div class="comment-header">
+          <Avatar size="sm" :image="`images/avatars/${imageName}`" />
 
-            <h2 class="h5">
-              {{ comment?.user.username }}
-              <Badge v-if="currentUser.username === comment?.user.username"
-                >you</Badge
-              >
-            </h2>
-            <span class="text-sm text-muted">{{ comment?.createdAt }}</span>
+          <h2 class="h5">
+            {{ comment?.user?.username }}
+            <Badge v-if="currentUser.username === comment?.user?.username"
+              >you</Badge
+            >
+          </h2>
+          <span class="text-sm text-muted">{{ comment?.createdAt }}</span>
 
-            <div class="comment-actions">
-              <ButtonVue
-                color="danger"
-                v-if="currentUser.username === comment?.user.username"
-                @click="$emit('onDelete', comment?.id)"
-              >
-                <template #icon><IconDelete /></template>Delete</ButtonVue
-              >
-              <ButtonVue
-                color="primary"
-                v-if="currentUser.username !== comment?.user.username"
-                @click="$emit('on-reply', comment?.id)"
-              >
-                <template #icon><IconReply /></template>Reply</ButtonVue
-              >
-              <ButtonVue
-                color="primary"
-                v-if="currentUser.username === comment?.user.username"
-                @click="$emit('on-edit', comment?.id)"
-              >
-                <template #icon><IconEdit /></template>Edit</ButtonVue
-              >
-            </div>
+          <div class="comment-actions">
+            <ButtonVue
+              color="danger"
+              v-if="currentUser.username === comment?.user?.username"
+              @click="$emit('onDelete', comment?.id)"
+            >
+              <template #icon><IconDelete /></template>Delete</ButtonVue
+            >
+            <ButtonVue
+              color="primary"
+              v-if="currentUser.username !== comment?.user?.username"
+              @click="$emit('onReply', comment?.id)"
+            >
+              <template #icon><IconReply /></template>Reply</ButtonVue
+            >
+            <ButtonVue
+              color="primary"
+              v-if="currentUser.username === comment?.user?.username"
+              @click="$emit('on-edit', comment?.id)"
+            >
+              <template #icon><IconEdit /></template>Edit</ButtonVue
+            >
           </div>
-
-          <p class="comment-text">{{ comment?.content }}</p>
         </div>
-      </div>
 
-      <slot name="replies"></slot>
-    </li>
-  </Transition>
+        <p class="comment-text">{{ comment?.content }}</p>
+      </div>
+    </div>
+
+    <!-- Edit mode -->
+    <section class="new-comment-form" v-if="comment?.id === 0">
+      <CommentForm
+        :current-user="currentUser"
+        @on-save="onAddComment"
+        actionText="REPLY"
+      />
+    </section>
+    <slot name="replies"></slot>
+  </li>
 </template>
 
 <script lang="ts">
@@ -75,13 +82,17 @@ export default {
   },
   computed: {
     imageName() {
-      const image = this.comment?.user.image.png;
+      const image = this.comment?.user?.image.png;
       return image?.substring(image?.lastIndexOf("/") + 1) ?? "";
     },
     ...mapState("authModule", ["currentUser"]),
   },
   methods: {
-    ...mapActions("commentsModule", ["increaseScore", "decreaseScore"]),
+    ...mapActions("commentsModule", [
+      "increaseScore",
+      "decreaseScore",
+      "onAddComment",
+    ]),
     increase(id: number) {
       this.increaseScore(id);
     },
@@ -89,7 +100,8 @@ export default {
       this.decreaseScore(id);
     },
   },
-  emits: ["onDelete"],
+  emits: ["onDelete", "onReply"],
+  components: { CommentForm },
 };
 </script>
 
@@ -103,6 +115,7 @@ export default {
     display: flex;
     flex-direction: column;
     margin-left: 16px;
+    width: 100%;
   }
 
   &-header {

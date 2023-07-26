@@ -1,5 +1,13 @@
 import type { Comment } from "./../types.d";
 
+export const NEW_COMMENT: Comment = {
+  id: 0,
+  content: "",
+  createdAt: new Date().toDateString(),
+  score: 0,
+  user: null,
+};
+
 export function findObjectById(arr: Comment[], id: number): Comment | null {
   for (const obj of arr) {
     if (obj.id === id) {
@@ -34,4 +42,22 @@ export function deleteComment(
     }
   }
   return false;
+}
+
+export function addComment(
+  comments: Comment[],
+  parentId: number,
+  newComment: Comment
+): Comment[] {
+  comments.forEach(function (comment) {
+    if (comment.id === parentId) {
+      if (!comment.replies) {
+        comment.replies = [];
+      }
+      comment.replies.push(newComment);
+    } else if (comment.replies) {
+      addComment(comment.replies, parentId, newComment);
+    }
+  });
+  return comments;
 }

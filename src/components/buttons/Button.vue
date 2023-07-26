@@ -12,8 +12,10 @@ const slots = useSlots();
       danger: isDanger,
       [sizeClass]: size,
       fill,
-      block: block,
+      block,
+      disabled,
     }"
+    :disabled="disabled"
   >
     <i v-if="slots.icon">
       <slot name="icon"> </slot>
@@ -31,6 +33,7 @@ export default {
     fill: { type: Boolean, default: false },
     size: { type: String, default: "md" },
     block: Boolean,
+    disabled: { type: Boolean, default: false },
   },
   computed: {
     isPrimary() {
@@ -109,6 +112,13 @@ export default {
 .block {
   display: block;
   width: 100%;
+}
+
+.disabled {
+  opacity: 50%;
+  &:hover {
+    opacity: 50%;
+  }
 }
 
 i {

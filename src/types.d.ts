@@ -1,9 +1,9 @@
 export interface Comment {
-  id: number;
+  id: number | string;
   content: string;
   createdAt: string;
   score: number;
-  user: User;
+  user: User | null;
   replies?: Comment[];
   replyingTo?: string;
 }
